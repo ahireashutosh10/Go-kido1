@@ -1,0 +1,66 @@
+.faq-container {
+    max-width: 90%;          /* Take up 90% of the screen width */
+    margin: 4rem auto;
+    padding-left: 1rem;
+    padding-right: 1rem;     /* Balanced padding on both sides */
+    font-size: 0.875rem;
+    color: #1f2937;
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+  }
+  
+  .abcd h1 .second-line {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  
+  /* ✅ This is the updated class you're using in JSX */
+  .faq-section-heading {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+  
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .faq-item {
+    border-top: 0px solid #ccc;
+    padding-top: 0rem;
+  }
+  
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 550;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .faq-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .faq-icon {
+    font-size: 1.1rem;
+  }
+  
+  .faq-plus {
+    font-size: 1.2rem;
+    color: #333;
+    padding-right: 8px;
+  }
+  
+  .faq-answer {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  

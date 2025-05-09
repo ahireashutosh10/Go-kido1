@@ -1,0 +1,164 @@
+/* General page styling */
+body {
+  font-family: "Poppins", Helvetica, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #777;
+}
+
+/* Background image styling */
+.background-image {
+  background: url('../assets/aboutbg.png') no-repeat center center/cover;
+  height: 605px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  filter: brightness(80%); 
+}
+
+/* About Us text styling */
+.about-text {
+  font-size: 30px;
+  font-family: 'Times New Roman', serif;
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+}
+
+.about-text p {
+  margin-top: 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+/* Section split into text and image */
+.split-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.split-text {
+  width: 55%;
+  font-size: 16px;
+  color: #777;
+  line-height: 1.6;
+}
+
+.split-text h2 {
+  color: green;
+  font-size: 28px;
+}
+
+.split-image {
+  width: 50%;
+  text-align: right;
+}
+
+.split-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Common content container */
+.other {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+/* Headings styling */
+.other h1, .other h2 {
+  color: green;
+  font-weight: bold;
+}
+
+.other h1 {
+  font-size: 32px;
+}
+
+.other h2 {
+  font-size: 24px;
+  margin-top: 30px;
+}
+
+/* Section titles */
+.lead {
+  font-size: 20px;
+  font-weight: bold;
+  color: green;
+  margin-top: 20px;
+}
+
+/* Paragraph text */
+.other p {
+  font-size: 16px;
+  color: #777;
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+/* Bullet points styling */
+.other ul {
+  list-style: disc;
+  margin-left: 20px;
+  padding-left: 10px;
+}
+
+.other ul li {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #777;
+}
+
+.lead ul li {
+  color: #777;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .split-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .split-text, .split-image {
+    width: 100%;
+  }
+
+  .split-image {
+    margin-top: 20px;
+  }
+
+  .other {
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .other h1 {
+    font-size: 28px;
+  }
+
+  .other h2 {
+    font-size: 22px;
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+
+  .other p, .other ul li {
+    font-size: 15px;
+  }
+}

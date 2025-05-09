@@ -1,0 +1,107 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2e7d32;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 20px;
+    color: gray;
+    margin-bottom: 30px;
+  }
+  
+  .restaurantGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+  }
+  
+  .restaurantCard {
+    display: flex;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer; 
+    border-radius: 0;
+    border: 0.5px solid #ddd;
+  }
+  
+  .restaurantCard:hover {
+    transform: scale(1.03);
+  }
+  
+  .restaurantImg {
+    width: 180px;
+    height: 140px;
+    object-fit: cover;
+  }
+  
+  .restaurantInfo {
+    padding: 15px;
+    flex: 1;
+  }
+  
+  h3 {
+    margin: 0;
+    color: #2e7d32;
+    font-size: 20px;
+  }
+  
+  .cuisine {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  .address {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .open {
+    background: #2e7d32;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  
+  .rating {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2e7d32;
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating svg {
+    margin-right: 4px;
+  }
+  
+  .viewAll {
+    text-align: right;
+    margin-top: 20px;
+  }
+  
+  .viewLink {
+    color: #2e7d32;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  

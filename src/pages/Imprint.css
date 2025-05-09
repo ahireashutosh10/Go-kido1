@@ -1,0 +1,86 @@
+/* Imprint Hero Section */
+.abcd {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-image: url('../assets/imprintbg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.abcd h1 {
+  position: relative;
+  z-index: 2;
+  font-size: 3.0rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 0 1rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Imprint Container */
+.imprint-container {
+  max-width: 90%;
+  margin: 4rem auto;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  color: #1f2937;
+  background-color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+/* Section Headings */
+.imprint-section h2 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+/* Divider */
+.imprint-divider {
+  padding-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Paragraphs */
+.imprint-divider p {
+  margin-bottom: 0.75rem;
+}
+
+/* Email Link */
+.imprint-link {
+  color: #2563eb;
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+.imprint-link:hover {
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .abcd h1 {
+    font-size: 2rem;
+  }
+
+  .imprint-container {
+    padding: 0 1rem;
+  }
+}

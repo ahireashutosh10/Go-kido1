@@ -1,0 +1,205 @@
+.footer {
+    background-color: 	#d3e6c8;
+    color: #2e5e2e;
+    font-family: Arial, sans-serif;
+    width: 100%;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+  }
+  
+  .footer-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2e5e2e;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 8px;
+  }
+  
+  .footer-section ul li a,
+  .footer-section ul li {
+    color: #2e5e2e;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  
+  .footer-section ul li a:hover {
+    color: #1a3a1a;
+    text-decoration: underline;
+  }
+  
+  .location-list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+  }
+  
+  .location-list li {
+    position: relative;
+  }
+  
+  .location-list li:not(:last-child)::after {
+    content: ",";
+    position: absolute;
+    right: -4px;
+  }
+  
+  .payment-methods {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+  
+  .payment-icon {
+    width: 50px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+  }
+  
+  .visa {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%23016FD0"/><path d="M651.4,369.5h-91.9l57.5,261h91.9L651.4,369.5z M500,630.5l86.7-261h-91.9l-55.2,180.8l-6.9-36.1c-11.5-38.4-47.6-79.9-87.9-100.7l71.3,217h92L500,630.5z M338.9,369.5h-138l-1.1,6.9c107.5,25.3,178.8,86.7,208.3,160.9l-30.7-147.1C373.1,375.2,358.1,370.6,338.9,369.5z M827.1,630.5h84.8l-73.3-261h-78.7c-17.2,0-32.2,9.2-39.1,24.1l-138,236.9h92l19.5-51.7h118.8L827.1,630.5z M732.4,521.9l49.4-130.7l27.6,130.7H732.4z" fill="white"/></svg>');
+  }
+  
+  .mastercard {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%23EB001B" x="0" y="0"/><circle cx="650" cy="500" r="350" fill="%23F79E1B"/><path d="M500,650 a150,150 0 0,0 0,-300 a150,150 0 0,0 0,300 z" fill="%230099DF"/></svg>');
+  }
+  
+  .paypal {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%23ffffff"/><path d="M400,250 C400,250 450,250 500,300 C550,350 550,400 550,400 L500,650 L350,650 L400,250 Z" fill="%23003087"/><path d="M600,350 C600,350 650,350 700,400 C750,450 750,500 750,500 L700,750 L550,750 L600,350 Z" fill="%23009cde"/></svg>');
+  }
+  
+  .amex {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%231F72CD"/><path d="M500,400 L600,400 L650,500 L700,400 L800,400 L700,550 L800,700 L700,700 L650,600 L600,700 L500,700 L600,550 L500,400 Z M300,400 L450,400 L450,450 L350,450 L350,500 L450,500 L450,550 L350,550 L350,600 L450,600 L450,650 L300,650 L300,400 Z" fill="white"/></svg>');
+  }
+  
+  .social-heading {
+    margin-top: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    border-radius: 4px;
+  }
+  
+  .twitter {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%231DA1F2"/><path d="M750,300 C725,312.5 700,320 675,325 C650,300 612.5,287.5 575,300 C537.5,312.5 512.5,350 512.5,387.5 C512.5,400 512.5,412.5 517.5,425 C425,425 337.5,375 275,300 C262.5,312.5 250,337.5 250,362.5 C250,412.5 275,450 312.5,475 C287.5,475 262.5,467.5 250,450 C250,450 250,450 250,450 C250,487.5 275,525 312.5,537.5 C300,542.5 287.5,542.5 275,542.5 C267.5,542.5 260,542.5 250,537.5 C262.5,575 300,600 337.5,600 C300,625 250,637.5 200,637.5 C187.5,637.5 175,637.5 162.5,637.5 C200,662.5 250,675 300,675 C575,675 725,450 725,250 C725,250 725,237.5 725,225 C750,212.5 775,187.5 800,162.5 C775,175 750,182.5 725,187.5 C750,175 775,150 787.5,125 C762.5,137.5 737.5,150 712.5,157.5 C687.5,125 650,112.5 612.5,112.5 C537.5,112.5 475,175 475,250 C475,262.5 475,275 480,287.5 C375,287.5 275,237.5 212.5,162.5 C200,175 187.5,200 187.5,225 C187.5,275 212.5,312.5 250,337.5 C225,337.5 200,330 175,312.5 C175,312.5 175,312.5 175,312.5 C175,375 225,425 287.5,437.5 C275,442.5 262.5,442.5 250,442.5 C242.5,442.5 235,442.5 225,437.5 C242.5,487.5 287.5,525 337.5,525 C287.5,562.5 225,587.5 162.5,587.5 C150,587.5 137.5,587.5 125,587.5 C175,625 237.5,650 300,650 C612.5,650 775,400 775,175 C775,175 775,162.5 775,150 C800,137.5 825,112.5 850,87.5 C825,100 800,107.5 775,112.5 C800,100 825,75 837.5,50 C812.5,62.5 787.5,75 762.5,82.5 C737.5,50 700,37.5 662.5,37.5 C587.5,37.5 525,100 525,175 C525,187.5 525,200 530,212.5 C425,212.5 325,162.5 262.5,87.5 C250,100 237.5,125 237.5,150 C237.5,200 262.5,237.5 300,262.5 C275,262.5 250,255 225,237.5 C225,237.5 225,237.5 225,237.5 C225,300 275,350 337.5,362.5 C325,367.5 312.5,367.5 300,367.5 C292.5,367.5 285,367.5 275,362.5 C292.5,412.5 337.5,450 387.5,450 C337.5,487.5 275,512.5 212.5,512.5 C200,512.5 187.5,512.5 175,512.5 C225,550 287.5,575 350,575 C662.5,575 825,325 825,100 C825,100 825,87.5 825,75 C850,62.5 875,37.5 900,12.5" fill="white"/></svg>');
+  }
+  
+  .facebook {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%233b5998"/><path d="M700,1000 L700,600 L800,600 L850,450 L700,450 L700,350 C700,300 725,275 775,275 L850,275 L850,125 C825,125 775,125 725,125 C600,125 525,200 525,325 L525,450 L425,450 L425,600 L525,600 L525,1000 L700,1000 Z" fill="white"/></svg>');
+  }
+  
+  .instagram {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="rg" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="%23fdf497"/><stop offset="5%" stop-color="%23fdf497"/><stop offset="45%" stop-color="%23fd5949"/><stop offset="60%" stop-color="%23d6249f"/><stop offset="90%" stop-color="%23285AEB"/></radialGradient></defs><rect width="1000" height="1000" fill="url(%23rg)"/><circle cx="500" cy="500" r="200" fill="none" stroke="white" stroke-width="50"/><circle cx="750" cy="250" r="50" fill="white"/></svg>');
+  }
+  
+  .youtube {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><rect width="1000" height="1000" fill="%23FF0000"/><path d="M700,450 L400,250 L400,650 L700,450 Z" fill="white"/></svg>');
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid rgba(46, 94, 46, 0.2);
+    padding: 15px 0;
+  }
+  
+  .footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+  }
+  
+  .footer-links a {
+    color: #2e5e2e;
+    text-decoration: none;
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .separator {
+    margin: 0 5px;
+  }
+  
+  .scroll-top {
+    background-color: #2e5e2e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .scroll-top:hover {
+    background-color: #1a3a1a;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+    }
+  
+    .footer-section {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+  
+    .footer-bottom-content {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+  
+  

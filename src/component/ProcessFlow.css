@@ -1,0 +1,227 @@
+/* Container Layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  background-color: #f3f4f6;
+}
+
+/* Steps Container */
+.steps-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 1400px; /* Increased height to accommodate all steps */
+  width: 100%;
+}
+
+/* Step Card */
+.card1 {
+  width: 250px;
+  height: 250px;
+  background: white;
+  border-radius: 5px;
+  padding: 30px;
+  text-align: center;
+  position: absolute;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 12px 35px rgba(0, 0, 139, 0.6); /* Dark Blue Shadow */
+}
+
+/* Hover Effect */
+.card1:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(0, 0, 139, 0.8);
+}
+
+/* Step Number */
+.step {
+  width: 40px;
+  height: 40px;
+  background: green;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Image Styling */
+.icon {
+  width: 100px;
+  height: auto;
+  margin-top: 20px;
+}
+
+/* Step Text */
+.card1 p {
+  font-size: 20px;
+  color: #367337;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* Positioning each step */
+.card1:nth-child(1) {
+  top: 50px;
+  left: 0px;
+  height: 330px;
+  width: 300px;
+}
+.card1:nth-child(2) {
+  top: 410px;
+  left: 0px;
+  height: 330px;
+  width: 300px;
+}
+.card1:nth-child(3) {
+  top: 220px;
+  left: 330px;
+  height: 330px;
+  width: 300px;
+}
+.card1:nth-child(4) {
+  top: 800px;
+  right: 330px;
+  height: 330px;
+  width: 300px;
+}
+.card1:nth-child(5) {
+  top: 1160px;
+  right: 330px;
+  height: 330px;
+  width: 300px;
+}
+.card1:nth-child(6) {
+  top: 1000px;
+  right: 0px;
+  height: 330px;
+  width: 300px;
+}
+
+/* Description Text Section */
+.GoKidogoUI {
+  text-align: left;
+  padding: 50px;
+  position: absolute;
+  top: 150px;
+  left: 1100px;
+  width: 500px;
+}
+
+.GoKidogoUI h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: green;
+  margin-bottom: 10px;
+}
+
+.GoKidogoUI p {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Main Section Layout */
+.gokidogo-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 100px;
+  background-color: #fff;
+}
+
+/* Steps Layout */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Individual Step Card */
+.step-card {
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(123, 97, 255, 0.2);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Step Icon Styling */
+.step-icon {
+  width: 80px;
+  height: 80px;
+  margin: 10px 0;
+}
+
+/* Step Circle Number */
+.step-circle {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: green;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Description Section for GoKidogo */
+.GoKidogoDescription {
+  text-align: left;
+  background-color: #eaf4ea;
+  padding: 30px;
+  margin-left: 650px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(123, 97, 255, 0.2);
+}
+
+.GoKidogoDescription h2 {
+  color: #367337;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.GoKidogoDescription p {
+  color: #9a92c2;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+/* Order More Section */
+.order {
+  text-align: left;
+  background-color: #eaf4ea;
+  padding: 30px;
+  margin-top: 900px;
+  margin-right: 640px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(123, 97, 255, 0.2);
+}
+
+.order h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.order p {
+  font-size: 22px;
+  color: #998fc7;
+  margin-top: 10px;
+}

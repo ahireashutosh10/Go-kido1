@@ -1,0 +1,35 @@
+.data-protection-container {
+    max-width: 90%;          /* Take up 90% of the screen width */
+    margin: 4rem auto;
+    padding-left: 1rem;
+    padding-right: 1rem;     /* Balanced padding on both sides */
+    font-size: 0.875rem;
+    color: #1f2937;
+    background-color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+  }
+  
+  .data-protection-container h2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+  }
+  
+  .description {
+    margin-bottom: 2rem;
+  }
+  
+  .section {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  a {
+    color: #1f2937;
+    text-decoration: none;
+  }
+  

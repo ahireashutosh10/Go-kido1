@@ -1,0 +1,150 @@
+import React from 'react';
+//import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter ,Routes, Route} from 'react-router-dom';
+
+
+import Header from './component/Header';
+import Home from './pages/Home';
+import City from './pages/City';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import GokidoTool from './pages/GokidoTool';
+import Background from './component/Background';
+import Login from './pages/Login';
+import Partner from './pages/Partner';
+import Footer from './component/footer';
+
+function App() {
+  return (
+    <BrowserRouter>
+      
+      <header>
+        <Header />
+         </header>
+
+      
+      <Background />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/city" element={<City />} />
+          <Route path="/our-partners" element={<Partner />} />
+          <Route path="/about-us" element={<About />} />
+          <Route path="/become-a-partner" element={<Contact />} />
+          <Route path="/our-solution" element={<GokidoTool />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      
+      <Footer/>
+    </BrowserRouter>
+    // <BrowserRouter>
+    
+    // <Header />
+    //   <Routes>
+    //     <Route path='/' element={<Home />}></Route> 
+    //     <Route path="city" element={<City />} />
+    //       <Route path="our-partners" element={<Partner />} />
+    //       <Route path="/about-us" element={<About />} />
+    //       <Route path="contact" element={<Contact />} />
+    //       <Route path="gokido-tool" element={<GokidoTool />} />
+    //       <Route path="login" element={<Login />} />
+    //   </Routes>
+    //   <Footer/>
+    //   </BrowserRouter>
+  );
+}
+
+export default App;
+--------------------------------------------------------------------------------------
+
+App.jsx
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route, BrowserRouter, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+//import { BrowserRouter ,Routes, Route} from 'react-router-dom';
+
+
+import Header from './component/Header';
+import Home from './pages/Home';
+import City from './pages/City';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import GokidoTool from './pages/GokidoTool';
+import Background from './component/Background';
+import Login from './pages/Login';
+import Partner from './pages/Partner';
+import Footer from './component/footer';
+
+// function App() {
+//   return (
+    // <BrowserRouter>
+      
+    //   <header>
+    //     <Header />
+    //      </header>
+
+      
+    //   {/* <Background /> */}
+    //     <Routes>
+    //       <Route path="/" element={<Home />} />
+    //       <Route path="/city" element={<City />} />
+    //       <Route path="/our-partners" element={<Partner />} />
+    //       <Route path="/about-us" element={<About />} />
+    //       <Route path="/become-a-partner" element={<Contact />} />
+    //       <Route path="/our-solution" element={<GokidoTool />} />
+    //       <Route path="/login" element={<Login />} />
+    //     </Routes>
+      
+    //   <Footer/>
+    // </BrowserRouter>
+    // // <BrowserRouter>
+    
+    // // <Header />
+    // //   <Routes>
+    // //     <Route path='/' element={<Home />}></Route> 
+    // //     <Route path="city" element={<City />} />
+    // //       <Route path="our-partners" element={<Partner />} />
+    // //       <Route path="/about-us" element={<About />} />
+    // //       <Route path="contact" element={<Contact />} />
+    // //       <Route path="gokido-tool" element={<GokidoTool />} />
+    // //       <Route path="login" element={<Login />} />
+    // //   </Routes>
+    // //   <Footer/>
+    // //   </BrowserRouter>
+
+    const router = createBrowserRouter(
+      createRoutesFromElements(
+        <Route path='/' element={<layout />}>
+         <Route path='/' element={<Home />}></Route> 
+         <Route path="city" element={<City />} />
+           <Route path="our-partners" element={<Partner />} />
+           <Route path="/about-us" element={<About />} />
+           <Route path="contact" element={<Contact />} />
+           <Route path="gokido-tool" element={<GokidoTool />} />
+           <Route path="login" element={<Login />} />
+        </Route>
+      )
+    );
+    
+    // Render the app
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    );
+    
+  
+
+
+export default App;
+
+///////////////////////////////////////////////////
+css code of about us 
+.text-content {
+  color: #fff; /* White text for contrast */
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: Semi-transparent background behind text */
+  padding: 20px;
+  border-radius: 10px;
+}

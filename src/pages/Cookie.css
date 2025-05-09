@@ -1,0 +1,39 @@
+.cookie-policy-container {
+  max-width: 90%;          /* Take up 90% of the screen width */
+  margin: 4rem auto;
+  padding-left: 1rem;
+  padding-right: 1rem;     /* Balanced padding on both sides */
+  font-size: 0.875rem;
+  color: #1f2937;
+  background-color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  }
+  
+  .cookie-section {
+    margin-bottom: 32px;
+  }
+  
+  .cookie-section h4 {
+    font-size: 0.875 rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .cookie-section hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+  
+  .cookie-section p {
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+  }
+  ol {
+    margin-left: 1rem;
+  }
+  
+  
+  
+  
