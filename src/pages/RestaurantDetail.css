@@ -1,0 +1,148 @@
+/* General Reset */
+.restaurant-detail-container {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8fafa;
+}
+
+/* Banner */
+.restaurant-banner {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.restaurant-banner-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 12px;
+}
+
+.restaurant-logo {
+  max-height: 60px;
+  margin-bottom: 1rem;
+}
+
+.restaurant-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+}
+
+.restaurant-address,
+.restaurant-meta,
+.restaurant-cuisine {
+  font-size: 1rem;
+  margin: 0.2rem 0;
+}
+
+/* Category Filters */
+.category-filters {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.category-btn.active,
+.category-btn:hover {
+  background-color: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+/* Menu Items */
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.menu-item {
+  background: #e3f2e1;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item-info h3 {
+  margin: 0.5rem 0;
+  color: #2d572c;
+}
+
+.item-description {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.item-price {
+  font-weight: bold;
+  color: #388e3c;
+  margin-top: auto;
+}
+
+.item-image {
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Loading and Not Found */
+.loading-container,
+.not-found {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  border: 5px solid #eee;
+  border-top: 5px solid #4CAF50;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.back-button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1rem;
+}

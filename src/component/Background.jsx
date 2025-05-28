@@ -18,7 +18,7 @@ const Background = () => {
 
   const handleSearch = () => {
     if (query.trim()) {
-      navigate(`/search?query=${encodeURIComponent(query.trim())}`);
+      navigate(`/restaurants?search=${encodeURIComponent(query.trim())}`);
     }
   };
 

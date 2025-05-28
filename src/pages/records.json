@@ -21,7 +21,116 @@
                 "termsandconditions": "terms",
                 "category": "1",
                 "Rating": "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'restautant' in 'field list'",
-                "image": "https://gokidogo.de/images/restaurant/RestaurantImage_Goki (960 × 640 px).png"
+                "image": "https://gokidogo.de/images/restaurant/RestaurantImage_Goki (960 × 640 px).png",
+                "MenuItem": [
+                    {
+                         "mnuid": "127",
+                            "sku": "",
+                            "id": "127",
+                            "name": "Cashew Gemüse (gemischtes Gemüse mit Cashewkernen in Kokosmilch - VEGAN)",
+                            "image": "https://www.gokidogo.de/images/menu/",
+                            "description": "gemischtes Gemüse mit Cashewkernen in Kokosmilch - VEGAN",
+                            "image_is_loaded": null,
+                            "price": "7.50",
+                            "category": "Mittagessen & Abendessen",
+                            "category_id": "192",
+                            "category_weight": "1",
+                            "allergy_info": [],
+                            "maxaddon": 0,
+                            "addons": [
+                                {
+                                    "modifiers": 0
+                                }
+                            ],
+                            "selectopt": [
+                                {
+                                    "moption": 0
+                                }
+                            ]
+                        },
+                        {
+                            "mnuid": "128",
+                            "sku": "",
+                            "id": "128",
+                            "name": "Punjabi Pakora Kadhi (Gemüsebällchen in Kichererbsenmehl-Joghurt-Sauce)",
+                            "image": "https://www.gokidogo.de/images/menu/",
+                            "description": "Gemüsebällchen in Kichererbsenmehl-Joghurt-Sauce",
+                            "image_is_loaded": null,
+                            "price": "7.50",
+                            "category": "Mittagessen & Abendessen",
+                            "category_id": "192",
+                            "category_weight": "1",
+                            "allergy_info": [],
+                            "maxaddon": 0,
+                            "addons": [
+                                {
+                                    "modifiers": 0
+                                }
+                            ],
+                            "selectopt": [
+                                {
+                                    "moption": 0
+                                }
+                            ]
+                        },
+                        {
+                            "mnuid": "129",
+                            "sku": "",
+                            "id": "129",
+                            "name": "Saag Gosht (Lamm in Spinat)",
+                            "image": "https://www.gokidogo.de/images/menu/",
+                            "description": "Lamm in Spinat",
+                            "image_is_loaded": null,
+                            "price": "7.50",
+                            "category": "Mittagessen & Abendessen",
+                            "category_id": "192",
+                            "category_weight": "1",
+                            "allergy_info": [],
+                            "maxaddon": 0,
+                            "addons": [
+                                {
+                                    "modifiers": 0
+                                }
+                            ],
+                            "selectopt": [
+                                {
+                                    "moption": 0
+                                }
+                            ]
+                        },
+                        {
+                            "mnuid": "130",
+                            "sku": "",
+                            "id": "130",
+                            "name": "Toor Dal (Toor Linsen Curry -VEGAN) mild",
+                            "image": "https://www.gokidogo.de/images/menu/",
+                            "description": "Toor Dal (Toor Linsen Curry -VEGAN)\r\nmild",
+                            "image_is_loaded": null,
+                            "price": "7.50",
+                            "category": "Mittagessen & Abendessen",
+                            "category_id": "192",
+                            "category_weight": "1",
+                            "allergy_info": [],
+                            "maxaddon": 0,
+                            "addons": [
+                                {
+                                    "modifiers": 0
+                                }
+                            ],
+                            "selectopt": [
+                                {
+                                    "moption": 0
+                                }
+                            ]
+                        }
+
+                ]
+
+
+
+
+
+         
             },
             {
                 "restroid": "3",

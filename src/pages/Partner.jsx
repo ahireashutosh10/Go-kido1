@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Partner.css";
 import Records from "./records.json";
 
 const PartnerPage = () => {
   const [activeService, setActiveService] = useState("All");
+  const navigate = useNavigate();
 
   const filteredPartners =
     activeService === "All"
@@ -12,12 +14,14 @@ const PartnerPage = () => {
 
   return (
     <>
-     
       <div className="abc">
         <div className="overlay4"></div>
-        <h1>{filteredPartners.length} Partner{filteredPartners.length !== 1 && "s"}</h1>
+        <h1>
+          {filteredPartners.length} Partner
+          {filteredPartners.length !== 1 && "s"}
+        </h1>
       </div>
-     
+
       <div className="partner-wrapper">
         <div className="partner-filters">
           {["All", "Delivery", "Takeaway"].map((opt) => (
@@ -47,17 +51,21 @@ const PartnerPage = () => {
 
       <div className="card-container">
         {filteredPartners.map((record, index) => (
-          <div className="box" key={index}>
+          <div
+            className="box"
+            key={index}
+            onClick={() => navigate(`/restaurant/${record.restroid}`)}
+            style={{ cursor: "pointer" }}
+          >
             <div className="card-image">
-              <img src={record.image} alt={record.name}  className="card-image" />
+              <img src={record.image} alt={record.name} className="card-image" />
               <div className="cuisine-tag">{record.cuisine}</div>
-              </div>
-              <div className="card-info">
-  <div className="status-badge">open</div>
-  <div className="restaurant-name">{record.name}</div>
-  <div className="address">{record.address}</div>
-</div>
-           
+            </div>
+            <div className="card-info">
+              <div className="status-badge">open</div>
+              <div className="restaurant-name">{record.name}</div>
+              <div className="address">{record.address}</div>
+            </div>
             <div className="options">
               <div><i className="fas fa-shopping-bag"></i>Takeaway</div>
               <div><i className="fas fa-biking"></i>Delivery</div>

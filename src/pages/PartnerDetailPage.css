@@ -239,3 +239,212 @@
 .pickup-label input[type="radio"] {
   margin-right: 5px;
 }
+
+
+
+
+
+/* Loading and Error States */
+.loading-overlay, .error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #4CAF50;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Restaurant Header */
+.restaurant-header {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.restaurant-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.restaurant-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  color: white;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+
+/* Main Content Layout */
+.main-content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+/* Category Navigation */
+.category-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-btn {
+  padding: 0.8rem 1rem;
+  border: none;
+  background: #f5f5f5;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.category-btn.active {
+  background: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+/* Menu Items */
+.menu-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.menu-item-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.menu-item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.item-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.item-details {
+  padding: 1rem;
+}
+
+.item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.add-to-cart-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Order Summary */
+.order-summary-panel {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: sticky;
+  top: 1rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.remove-item-btn {
+  background: none;
+  border: none;
+  color: #ff5252;
+  cursor: pointer;
+}
+
+.checkout-button {
+  width: 100%;
+  padding: 1rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.checkout-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .main-content-wrapper {
+    grid-template-columns: 1fr 2fr;
+  }
+  
+  .order-summary-panel {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content-wrapper {
+    grid-template-columns: 1fr;
+  }
+  
+  .category-navigation {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  
+  .category-btn {
+    white-space: nowrap;
+  }
+}
