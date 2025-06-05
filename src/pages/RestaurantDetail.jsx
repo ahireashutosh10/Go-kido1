@@ -1,115 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import restaurantData from './records.json'; // External JSON
-import "./PartnerDetailPage.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const RestaurantDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [restaurant, setRestaurant] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [menuCategories, setMenuCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
-    const foundRestaurant = restaurantData.find(r => r.restroid === id);
-    if (foundRestaurant) {
-      setRestaurant(foundRestaurant);
-    } else {
-      console.error(`Restaurant with ID ${id} not found`);
-    }
-    setLoading(false);
+    const fetchRestaurantDetail = async () => {
+      try {
+        const res = await axios.get(`/api/restaurentdetail?restid=${id}`);
+        const data = res.data?.[0];
+
+        if (!data) {
+          console.error('Invalid restaurant data');
+          return;
+        }
+
+        setRestaurant(data);
+
+        const items = data.MenuItem || [];
+
+        const categoryMap = {};
+        items.forEach((item) => {
+          if (!categoryMap[item.category_id]) {
+            categoryMap[item.category_id] = {
+              category_id: item.category_id,
+              category: item.category,
+              products: [],
+            };
+          }
+          categoryMap[item.category_id].products.push(item);
+        });
+
+        const categories = Object.values(categoryMap);
+        setMenuCategories(categories);
+
+        if (categories.length > 0) {
+          setActiveCategory(categories[0].category_id);
+        }
+      } catch (err) {
+        console.error('Error fetching restaurant detail:', err);
+      }
+    };
+
+    fetchRestaurantDetail();
   }, [id]);
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading restaurant details...</p>
-      </div>
-    );
-  }
-
-  if (!restaurant) {
-    return (
-      <div className="not-found">
-        <p>Restaurant not found</p>
-        <button onClick={() => navigate(-1)} className="back-button">Go Back</button>
-      </div>
-    );
-  }
-
-  const categories = ['All', ...new Set(restaurant.MenuItem.map(item => item.category))];
-  const filteredMenu = activeCategory === 'All'
-    ? restaurant.MenuItem
-    : restaurant.MenuItem.filter(item => item.category === activeCategory);
-
   return (
-    <div className="restaurant-detail-container">
-      {/* Back button */}
-      <button onClick={() => navigate(-1)} className="back-button">
-        &larr; Back to Restaurants
-      </button>
-
-      {/* Banner Section */}
-      <div
-        className="restaurant-banner"
-        style={{
-          backgroundImage: `url(${restaurant.banner || 'https://via.placeholder.com/1200x400?text=Banner'})`
-        }}
-      >
-        <div className="restaurant-banner-overlay">
-          {restaurant.logo && (
+    <div style={{ padding: '20px' }}>
+      {restaurant && (
+        <>
+          <h2>{restaurant.name}</h2>
+          {restaurant.image && (
             <img
-              src={restaurant.logo}
+              src={restaurant.image}
               alt={restaurant.name}
-              className="restaurant-logo"
+              style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px' }}
             />
           )}
-          <h1 className="restaurant-name">{restaurant.name}</h1>
-          <p className="restaurant-address">{restaurant.address}</p>
-          <p className="restaurant-meta">
-            <i className="fas fa-clock"></i> Min. {restaurant.minimumdeliveryamount} € &nbsp;•&nbsp; {restaurant.minimumdeliverytime} min delivery
+          <p style={{ marginTop: '10px' }}>
+            <strong>Address:</strong> {restaurant.address}<br />
+            <strong>Cuisine:</strong> {restaurant.cuisine}<br />
+            <strong>Contact:</strong> {restaurant.mobile}
           </p>
-          <p className="restaurant-cuisine">{restaurant.cuisine}</p>
-        </div>
-      </div>
+        </>
+      )}
 
-      {/* Category Filters */}
-      <div className="category-filters">
-        {categories.map(category => (
-          <button
-            key={category}
-            className={`category-btn ${activeCategory === category ? 'active' : ''}`}
-            onClick={() => setActiveCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+      {menuCategories.length > 0 && (
+        <>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '30px', flexWrap: 'wrap' }}>
+            {menuCategories.map((cat) => (
+              <button
+                key={cat.category_id}
+                onClick={() => setActiveCategory(cat.category_id)}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: '20px',
+                  backgroundColor: activeCategory === cat.category_id ? '#c5dfb0' : '#f0f0f0',
+                  border: '1px solid #ccc',
+                  cursor: 'pointer'
+                }}
+              >
+                {cat.category}
+              </button>
+            ))}
+          </div>
 
-      {/* Menu Items */}
-      <div className="menu-items">
-        {filteredMenu.length === 0 ? (
-          <p className="no-items">No menu items in this category.</p>
-        ) : (
-          filteredMenu.map(item => (
-            <div key={item.mnuid} className="menu-item">
-              <div className="item-info">
-                <h3>{item.name}</h3>
-                <p className="item-description">{item.description}</p>
-                <div className="item-price">{item.price} €</div>
-              </div>
-              {item.image && !item.image.includes('(960 × 640 px)') && (
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="item-image"
-                />
-              )}
-            </div>
-          ))
-        )}
-      </div>
+          <h3 style={{ marginTop: '20px' }}>
+            {menuCategories.find((cat) => cat.category_id === activeCategory)?.category}
+          </h3>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginTop: '10px' }}>
+            {menuCategories
+              .find((cat) => cat.category_id === activeCategory)
+              ?.products.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    padding: '15px',
+                    backgroundColor: '#d2eac2',
+                    borderRadius: '10px',
+                    width: '250px',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+                  }}
+                >
+                  <strong>{item.name}</strong>
+                  <p style={{ margin: '8px 0' }}>{item.description}</p>
+                  <p><strong>{parseFloat(item.price).toFixed(2)} €</strong></p>
+                </div>
+              ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

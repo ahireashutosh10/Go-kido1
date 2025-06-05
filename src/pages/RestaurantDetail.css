@@ -146,3 +146,90 @@
   cursor: pointer;
   margin: 1rem;
 }
+.restaurant-detail-container {
+  padding: 2rem;
+  background: #f9fafa;
+}
+
+.menu-tabs {
+  margin-bottom: 1.5rem;
+}
+
+.tab-button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 20px;
+  border: 1px solid #a3d18d;
+  background-color: #f0fdf4;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background-color: #c5edc0;
+  font-weight: bold;
+}
+
+.menu-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.menu-items {
+  flex: 3;
+}
+
+.product-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.product-card {
+  background: #d9edc5;
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1 1 200px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product-card .price {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.product-card .icons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.order-summary {
+  flex: 1;
+  background: #d2eac5;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.order-summary h3 {
+  background: #367c2b;
+  color: white;
+  padding: 0.5rem;
+  margin: -1rem -1rem 1rem -1rem;
+  border-radius: 8px 8px 0 0;
+}
+
+.delivery-options {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+
+.preorder-button {
+  background: linear-gradient(to right, #c7e663, #437b2d);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}

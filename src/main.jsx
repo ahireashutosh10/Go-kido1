@@ -48,7 +48,7 @@ const router = createBrowserRouter(
       <Route path="city" element={<City />} />
       <Route path="partner" element={<Partner />} />
       <Route path="/restaurants" element={<RestaurantList />} />
-      <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+      <Route path="restaurant/:id" element={<RestaurantMenu />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
       <Route path="gokido-tool" element={<GokidoTool />} />
@@ -60,6 +60,7 @@ const router = createBrowserRouter(
       <Route path="faq" element={<Faq />} />
       <Route path="privacy" element={<Privacy />} />
       <Route path="partner/:partnerId" element={<PartnerDetailPage />} />
+      
       
     </Route>
   )

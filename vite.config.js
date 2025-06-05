@@ -8,8 +8,8 @@ export default defineConfig({
       '/api': {
         target: 'https://testapp.gokidogo.com/webapi',
         changeOrigin: true,
-        
-        rewrite: path => path.replace(/^\/api/, ''),
+        secure: false, // optional: ignore SSL
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
