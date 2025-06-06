@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './RestaurantMenu.css';
 
 const RestaurantMenu = () => {
   const { id } = useParams();
   const [menu, setMenu] = useState([]);
+  const [restaurantInfo, setRestaurantInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('Beliebte Gerichte');
 
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        console.log('Fetching menu for restaurant ID:', id);
-
         const response = await fetch('/api/api.php/restaurentdetail', {
           method: 'POST',
           headers: {
@@ -28,55 +30,50 @@ const RestaurantMenu = () => {
           }),
         });
 
-        console.log('Response status:', response.status);
-
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('Error response body:', errorText);
           throw new Error(`Server error: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
-        console.log('Raw API Response:', data);
+        
+        // Extract restaurant information
+        if (data?.[0]) {
+          const restaurantData = data[0];
+          setRestaurantInfo({
+            name: restaurantData.restaurant_name || restaurantData.name || 'Restaurant Name',
+            address: restaurantData.address || restaurantData.restaurant_address || 'Address not available',
+            image: restaurantData.image || restaurantData.restaurant_image || restaurantData.cover_image || '',
+            minOrder: restaurantData.min_order || restaurantData.minimum_order || null,
+            deliveryTime: restaurantData.delivery_time || null,
+            rating: restaurantData.rating || null
+          });
+        }
 
         const menuHead = data?.[0]?.MenuItem?.MenuHead;
-        console.log('MenuHead array:', menuHead);
 
         if (Array.isArray(menuHead) && menuHead.length > 0) {
           const allItems = [];
 
-          menuHead.forEach((category, categoryIndex) => {
+          menuHead.forEach((category) => {
             const items = category.category_products;
 
-            console.log(`Category ${categoryIndex}:`, {
-              name: category.category,
-              id: category.category_id,
-              hasItems: Array.isArray(items),
-              itemCount: Array.isArray(items) ? items.length : 'not array'
-            });
-
             if (Array.isArray(items)) {
-              items.forEach((item, itemIndex) => {
-                console.log(`  Item ${itemIndex} in ${category.category}:`, item);
+              items.forEach((item) => {
                 allItems.push({
                   ...item,
                   categoryName: category.category,
                   categoryId: category.category_id
                 });
               });
-            } else {
-              console.log(`No items found in category ${category.category}`);
             }
           });
 
-          console.log('Total items extracted:', allItems.length);
           setMenu(allItems);
         } else {
-          console.warn('MenuHead not found, not an array, or empty');
           setMenu([]);
         }
       } catch (err) {
-        console.error('Error fetching menu:', err);
         setError(err.message || 'Failed to load menu');
       } finally {
         setLoading(false);
@@ -91,63 +88,232 @@ const RestaurantMenu = () => {
     }
   }, [id]);
 
-  if (loading) return <div style={{ padding: '1rem' }}>Loading menu...</div>;
-  if (error) return <div style={{ padding: '1rem', color: 'red' }}>Error: {error}</div>;
+  const addToCart = (item) => {
+    const existingItem = cart.find(cartItem => cartItem.id === item.menu_item_id || cartItem.id === item.id);
+    
+    if (existingItem) {
+      setCart(cart.map(cartItem => 
+        cartItem.id === (item.menu_item_id || item.id)
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem
+      ));
+    } else {
+      setCart([...cart, {
+        id: item.menu_item_id || item.id,
+        name: item.name || item.menu_item_name || item.item_name || 'Unnamed Item',
+        price: parseFloat(item.price || item.menu_item_price || item.item_price || 0),
+        description: item.description || item.menu_item_description || '',
+        quantity: 1
+      }]);
+    }
+  };
+
+  const removeFromCart = (itemId) => {
+    const existingItem = cart.find(cartItem => cartItem.id === itemId);
+    
+    if (existingItem && existingItem.quantity > 1) {
+      setCart(cart.map(cartItem => 
+        cartItem.id === itemId
+          ? { ...cartItem, quantity: cartItem.quantity - 1 }
+          : cartItem
+      ));
+    } else {
+      setCart(cart.filter(cartItem => cartItem.id !== itemId));
+    }
+  };
+
+  const getCartItemQuantity = (itemId) => {
+    const item = cart.find(cartItem => cartItem.id === itemId);
+    return item ? item.quantity : 0;
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+  };
+
+  const categories = ['Beliebte Gerichte', 'Vorspeisen', 'Suppen', 'Salate', 'Vegitarische Spezialitäten', 'Getränke'];
+
+  const filteredMenu = selectedCategory === 'Beliebte Gerichte' 
+    ? menu 
+    : menu.filter(item => item.categoryName === selectedCategory);
+
+  if (loading) return <div className="menu-loading">Loading menu...</div>;
+  if (error) return <div className="menu-error">Error: {error}</div>;
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>Restaurant Menu</h2>
-      {menu.length === 0 ? (
-        <p>No menu items found.</p>
-      ) : (
-        <div>
-          {menu.map((item, index) => (
-            <div 
-              key={item.menu_item_id || item.id || index}
-              style={{ 
-                padding: '1rem', 
-                margin: '0.5rem 0',
-                border: '1px solid #eee',
-                borderRadius: '8px',
-                backgroundColor: '#f9f9f9'
-              }}
-            >
-              {item.categoryName && (
-                <div style={{ 
-                  fontSize: '0.8em', 
-                  color: '#666', 
-                  fontWeight: 'bold',
-                  marginBottom: '0.5rem',
-                  textTransform: 'uppercase'
-                }}>
-                  {item.categoryName}
-                </div>
-              )}
-              
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <strong style={{ fontSize: '1.1em' }}>
-                    {item.name || item.menu_item_name || item.item_name || 'Unnamed Item'}
-                  </strong>
-                  {(item.description || item.menu_item_description) && (
-                    <div style={{ fontSize: '0.9em', color: '#666', marginTop: '0.25rem' }}>
-                      {item.description || item.menu_item_description}
-                    </div>
-                  )}
-                </div>
-                <span style={{ fontWeight: 'bold', fontSize: '1.2em', color: '#2d5016' }}>
-                  ₹{item.price || item.menu_item_price || item.item_price || 'N/A'}
-                </span>
-              </div>
-
-              {/* Debug info - can remove later */}
-              <div style={{ fontSize: '0.7em', color: '#999', marginTop: '0.5rem', fontFamily: 'monospace' }}>
-                Debug: {JSON.stringify(Object.keys(item))}
+    <div className="restaurant-layout">
+      {/* Left Section - Restaurant Info & Menu */}
+      <div className="menu-section">
+        {/* Restaurant Header */}
+        <div className="restaurant-header">
+          {restaurantInfo.image && (
+            <div className="restaurant-image-container">
+              <img 
+                src={restaurantInfo.image} 
+                alt={restaurantInfo.name}
+                className="restaurant-image"
+              />
+              <div className="restaurant-overlay">
+                <h1 className="restaurant-name">{restaurantInfo.name}</h1>
+                <p className="restaurant-address">{restaurantInfo.address}</p>
+                {restaurantInfo.minOrder && (
+                  <div className="restaurant-min-order">
+                    Min. {restaurantInfo.minOrder} €
+                  </div>
+                )}
               </div>
             </div>
+          )}
+          
+          {!restaurantInfo.image && (
+            <div className="restaurant-info-no-image">
+              <h1 className="restaurant-name">{restaurantInfo.name}</h1>
+              <p className="restaurant-address">{restaurantInfo.address}</p>
+              {restaurantInfo.minOrder && (
+                <div className="restaurant-min-order">
+                  Min. {restaurantInfo.minOrder} €
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Menu Categories Navigation */}
+        <div className="menu-categories">
+          {categories.map((category) => (
+            <button 
+              key={category}
+              className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </button>
           ))}
         </div>
-      )}
+
+        {/* Category Title */}
+        <div className="category-title">
+          <h2>{selectedCategory}</h2>
+        </div>
+
+        {/* Menu Items */}
+        {filteredMenu.length === 0 ? (
+          <p className="no-items">No items found in this category.</p>
+        ) : (
+          <div className="menu-grid">
+            {filteredMenu.map((item, index) => (
+              <div 
+                key={item.menu_item_id || item.id || index}
+                className="menu-item-card"
+              >
+                <div className="menu-item-content">
+                  <h3 className="menu-item-name">
+                    {item.name || item.menu_item_name || item.item_name || 'Unnamed Item'}
+                  </h3>
+                  {(item.description || item.menu_item_description) && (
+                    <p className="menu-item-description">
+                      {item.description || item.menu_item_description}
+                    </p>
+                  )}
+                  <div className="menu-item-footer">
+                    <span className="menu-item-price">
+                      {item.price || item.menu_item_price || item.item_price || 'N/A'} €
+                    </span>
+                    <div className="quantity-controls">
+                      {getCartItemQuantity(item.menu_item_id || item.id) > 0 && (
+                        <button 
+                          className="quantity-btn minus"
+                          onClick={() => removeFromCart(item.menu_item_id || item.id)}
+                        >
+                          -
+                        </button>
+                      )}
+                      {getCartItemQuantity(item.menu_item_id || item.id) > 0 && (
+                        <span className="quantity-display">
+                          {getCartItemQuantity(item.menu_item_id || item.id)}
+                        </span>
+                      )}
+                      <button 
+                        className="quantity-btn plus"
+                        onClick={() => addToCart(item)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Right Section - Order Summary */}
+      <div className="order-summary-section">
+        <div className="order-summary">
+          <div className="order-header">
+            <h3>Order Summary</h3>
+          </div>
+          
+          <div className="order-content">
+            {cart.length === 0 ? (
+              <p className="empty-cart">Your cart is empty</p>
+            ) : (
+              <>
+                <div className="cart-items">
+                  {cart.map((item) => (
+                    <div key={item.id} className="cart-item">
+                      <div className="cart-item-info">
+                        <h4>{item.name}</h4>
+                        <p>{item.description}</p>
+                        <span className="cart-item-price">{item.price.toFixed(2)} €</span>
+                      </div>
+                      <div className="cart-quantity-controls">
+                        <button 
+                          className="cart-quantity-btn"
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          -
+                        </button>
+                        <span className="cart-quantity">{item.quantity}</span>
+                        <button 
+                          className="cart-quantity-btn"
+                          onClick={() => addToCart({ 
+                            menu_item_id: item.id, 
+                            name: item.name, 
+                            price: item.price,
+                            description: item.description 
+                          })}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="order-total">
+                  <div className="total-row">
+                    <span>TOTAL</span>
+                    <span>{getTotalPrice()}</span>
+                  </div>
+                </div>
+
+                <div className="delivery-option">
+                  <label className="radio-option">
+                    <input type="radio" name="delivery" value="pickup" defaultChecked />
+                    <span>Pickup</span>
+                  </label>
+                </div>
+
+                <button className="preorder-btn">
+                  Preorder
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

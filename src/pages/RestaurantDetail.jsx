@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import './RestaurantDetail.css';
 
 const RestaurantDetail = () => {
   const { id } = useParams();
@@ -11,38 +11,39 @@ const RestaurantDetail = () => {
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
       try {
-        const res = await axios.get(`/api/restaurentdetail?restid=${id}`);
-        const data = res.data?.[0];
-
-        if (!data) {
-          console.error('Invalid restaurant data');
-          return;
-        }
-
-        setRestaurant(data);
-
-        const items = data.MenuItem || [];
-
-        const categoryMap = {};
-        items.forEach((item) => {
-          if (!categoryMap[item.category_id]) {
-            categoryMap[item.category_id] = {
-              category_id: item.category_id,
-              category: item.category,
-              products: [],
-            };
-          }
-          categoryMap[item.category_id].products.push(item);
+        const response = await fetch('/api/api.php/restaurentdetail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            deviceId: '1231231234',
+            latitude: '7435242355',
+            longitude: '774635423r',
+            restid: id,
+            restname: '',
+            user: '123456',
+            ipadd: '122.122.122.122'
+          }),
         });
 
-        const categories = Object.values(categoryMap);
-        setMenuCategories(categories);
+        const data = await response.json();
+        const resData = data?.[0];
+        setRestaurant(resData);
 
-        if (categories.length > 0) {
-          setActiveCategory(categories[0].category_id);
+        const categories = resData?.MenuItem?.MenuHead || [];
+        const formattedCategories = categories.map((cat) => ({
+          category_id: cat.category_id,
+          category: cat.category,
+          products: Array.isArray(cat.MenuItem) ? cat.MenuItem : []
+        }));
+
+        setMenuCategories(formattedCategories);
+        if (formattedCategories.length > 0) {
+          setActiveCategory(formattedCategories[0].category_id);
         }
       } catch (err) {
-        console.error('Error fetching restaurant detail:', err);
+        console.error('Error:', err);
       }
     };
 
@@ -50,71 +51,59 @@ const RestaurantDetail = () => {
   }, [id]);
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="restaurant-detail-container">
       {restaurant && (
-        <>
-          <h2>{restaurant.name}</h2>
-          {restaurant.image && (
-            <img
-              src={restaurant.image}
-              alt={restaurant.name}
-              style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px' }}
-            />
-          )}
-          <p style={{ marginTop: '10px' }}>
-            <strong>Address:</strong> {restaurant.address}<br />
-            <strong>Cuisine:</strong> {restaurant.cuisine}<br />
-            <strong>Contact:</strong> {restaurant.mobile}
-          </p>
-        </>
+        <div className="restaurant-header">
+          <img className="restaurant-cover" src="/images/sample-cover.jpg" alt="Restaurant" />
+          <div className="restaurant-info">
+            <h2>{restaurant.name}</h2>
+            <p>{restaurant.address || 'Amelia-Mary-Earhart-Straße 8'}</p>
+            <p>Min. {restaurant.minimumdeliveryamount} €</p>
+            <p>{restaurant.cuisine}</p>
+          </div>
+        </div>
       )}
 
-      {menuCategories.length > 0 && (
-        <>
-          <div style={{ display: 'flex', gap: '10px', marginTop: '30px', flexWrap: 'wrap' }}>
-            {menuCategories.map((cat) => (
-              <button
-                key={cat.category_id}
-                onClick={() => setActiveCategory(cat.category_id)}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '20px',
-                  backgroundColor: activeCategory === cat.category_id ? '#c5dfb0' : '#f0f0f0',
-                  border: '1px solid #ccc',
-                  cursor: 'pointer'
-                }}
-              >
-                {cat.category}
-              </button>
-            ))}
-          </div>
+      <div className="category-buttons">
+        {menuCategories.map((cat) => (
+          <button
+            key={cat.category_id}
+            className={`category-btn ${activeCategory === cat.category_id ? 'active' : ''}`}
+            onClick={() => setActiveCategory(cat.category_id)}
+          >
+            {cat.category}
+          </button>
+        ))}
+      </div>
 
-          <h3 style={{ marginTop: '20px' }}>
-            {menuCategories.find((cat) => cat.category_id === activeCategory)?.category}
-          </h3>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginTop: '10px' }}>
-            {menuCategories
-              .find((cat) => cat.category_id === activeCategory)
-              ?.products.map((item) => (
-                <div
-                  key={item.id}
-                  style={{
-                    padding: '15px',
-                    backgroundColor: '#d2eac2',
-                    borderRadius: '10px',
-                    width: '250px',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-                  }}
-                >
-                  <strong>{item.name}</strong>
-                  <p style={{ margin: '8px 0' }}>{item.description}</p>
-                  <p><strong>{parseFloat(item.price).toFixed(2)} €</strong></p>
+      <div className="menu-order-wrapper">
+        <div className="menu-items">
+          {menuCategories
+            .find((cat) => cat.category_id === activeCategory)
+            ?.products.map((item) => (
+              <div key={item.menu_item_id} className="menu-card">
+                <h4>{item.menu_item_name}</h4>
+                <p>{item.menu_item_description}</p>
+                <div className="price-section">
+                  <span>{parseFloat(item.menu_item_price).toFixed(2)} €</span>
+                  <div className="actions">
+                    <i className="info-btn">i</i>
+                    <i className="plus-btn">+</i>
+                  </div>
                 </div>
-              ))}
+              </div>
+            ))}
+        </div>
+
+        <div className="order-summary">
+          <h3>Order Summary</h3>
+          <p>Total</p>
+          <div className="pickup-option">
+            <input type="radio" name="delivery" checked readOnly /> Pickup
           </div>
-        </>
-      )}
+          <button className="order-btn">Available Soon</button>
+        </div>
+      </div>
     </div>
   );
 };
