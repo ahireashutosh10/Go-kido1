@@ -26,6 +26,8 @@ import Privacy from './pages/Privacy.jsx';
 import PartnerDetailPage from './pages/PartnerDetailPage.jsx';
 import RestaurantList from './pages/RestaurantList.jsx';
 import RestaurantMenu from './pages/RestaurantMenu.jsx';
+import OrderDetailsForm from "./pages/OrderDetailsForm";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import RestaurantDetail from './pages/RestaurantDetail.jsx';
 
 
@@ -59,6 +61,8 @@ const router = createBrowserRouter(
       <Route path="cookie" element={<Cookie />} />
       <Route path="faq" element={<Faq />} />
       <Route path="privacy" element={<Privacy />} />
+      <Route path="order-details" element={<OrderDetailsForm />} />
+      <Route path="order-confirmation" element={<OrderConfirmation />} />
       <Route path="partner/:partnerId" element={<PartnerDetailPage />} />
       
       
