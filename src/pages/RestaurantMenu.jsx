@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './RestaurantMenu.css';
-import { color } from 'framer-motion';
 
 const RestaurantMenu = () => {
   const { id } = useParams();
@@ -30,25 +29,19 @@ const RestaurantMenu = () => {
           }),
         });
 
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status} ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const data = await response.json();
 
-        // ✅ Extract restaurant info
         if (data?.[0]) {
-          const restaurantData = data[0].Restaurant_Detail?.[0] || {};
-
+          const res = data[0].Restaurant_Detail?.[0] || {};
           setRestaurantInfo({
-            name: restaurantData.restaurant_name || restaurantData.name || 'Restaurant Name',
-            address: restaurantData.address || restaurantData.restaurant_address || 'Address not available',
-            image: restaurantData.image
-              ? encodeURI(restaurantData.image)
-              : (restaurantData.restaurant_image || restaurantData.cover_image || ''),
-            minOrder: restaurantData.min_order || restaurantData.minimum_order || null,
-            deliveryTime: restaurantData.delivery_time || null,
-            rating: restaurantData.rating || null
+            name: res.restaurant_name || res.name || 'Restaurant Name',
+            address: res.address || res.restaurant_address || 'Address not available',
+            image: res.image ? encodeURI(res.image) : (res.restaurant_image || res.cover_image || ''),
+            minOrder: res.min_order || res.minimum_order || null,
+            deliveryTime: res.delivery_time || null,
+            rating: res.rating || null
           });
         }
 
@@ -120,7 +113,6 @@ const RestaurantMenu = () => {
   return (
     <div className="restaurant-layout">
       <div className="menu-section">
-        {/* Restaurant Header */}
         <div className="restaurant-header4">
           {restaurantInfo.image ? (
             <div className="restaurant-image-container">
@@ -140,7 +132,6 @@ const RestaurantMenu = () => {
           )}
         </div>
 
-        {/* Category Buttons */}
         <div className="menu-categories">
           {categories.map(cat => (
             <button key={cat} className={`category-btn ${selectedCategory === cat ? 'active' : ''}`} onClick={() => setSelectedCategory(cat)}>
@@ -149,38 +140,38 @@ const RestaurantMenu = () => {
           ))}
         </div>
 
-        {/* Menu Items */}
         <h2 className="category-title">{selectedCategory}</h2>
         <div className="menu-grid">
           {filteredMenu.length === 0 ? (
             <p className="no-items">No items found in this category.</p>
           ) : filteredMenu.map(item => (
-            <div key={item.menu_item_id || item.id} className="menu-item-card">
-              <div className="menu-item-content">
-                <h3 className="menu-item-name">{item.name || item.menu_item_name || item.item_name}</h3>
-                <div className="menu-item-footer">
-                  <span className="menu-item-price">{item.price || item.menu_item_price || 'N/A'} €</span>
-                  <div className="quantity-controls">
-                    {getCartItemQuantity(item.menu_item_id || item.id) > 0 && (
-                      <>
-                        <button className="quantity-btn minus" onClick={() => removeFromCart(item.menu_item_id || item.id)}>-</button>
-                        <span className="quantity-display">{getCartItemQuantity(item.menu_item_id || item.id)}</span>
-                      </>
-                    )}
-                    <button className="quantity-btn plus" onClick={() => addToCart(item)}>+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+           <div key={item.menu_item_id || item.id} className="menu-item-card">
+  <div className="menu-item-info">
+    <h4 className="menu-item-name">{item.name || item.menu_item_name || item.item_name}</h4>
+    <p className="menu-item-description">
+      ab {item.price || item.menu_item_price || 'N/A'}€ Erstelle nach deinem Geschmack.
+    </p>
+    <p className="menu-item-price">{item.price || item.menu_item_price || 'N/A'} €</p>
+   <div className="menu-item-actions">
+  <span className="icon-info">i</span>
+  <button className="configure-btn" onClick={() => addToCart(item)}>Konfiguriere</button>
+  <button className="icon-plus" onClick={() => addToCart(item)}>+</button>
+</div>
+  </div>
+  <img
+    src={item.image ? encodeURI(item.image) : '/default.jpg'}
+    alt={item.name || 'Menu Item'}
+    className="menu-item-image"
+  />
+</div>
+
           ))}
         </div>
       </div>
 
-      {/* Order Summary */}
       <div className="order-summary-section">
         <div className="order-summary">
-          <h3 className="order-header" style={{color:'white'}}>Order Details</h3>
-
+          <h3 className="order-header" style={{ color: 'white' }}>Order Details</h3>
           {cart.length === 0 ? (
             <p className="empty-cart">Your cart is empty</p>
           ) : (
@@ -196,20 +187,15 @@ const RestaurantMenu = () => {
                     <div className="cart-quantity-controls">
                       <button onClick={() => removeFromCart(item.id)} className="cart-quantity-btn">-</button>
                       <span className="cart-quantity">{item.quantity}</span>
-                      <button
-                        className="cart-quantity-btn"
-                        onClick={() => addToCart(item)}
-                      >+</button>
+                      <button onClick={() => addToCart(item)} className="cart-quantity-btn">+</button>
                     </div>
                   </div>
                 ))}
               </div>
-
               <div className="order-total total-row">
                 <span>TOTAL</span>
                 <span>{getTotalPrice()} €</span>
               </div>
-
               <div className="delivery-option">
                 <label className="radio-option">
                   <input type="radio" name="delivery" value="delivery" />
@@ -220,11 +206,7 @@ const RestaurantMenu = () => {
                   <span>Pickup</span>
                 </label>
               </div>
-
-              <button
-                className="preorder-btn"
-                onClick={() => navigate('/order-details', { state: { cart, restaurantInfo } })}
-              >
+              <button className="preorder-btn" onClick={() => navigate('/order-details', { state: { cart, restaurantInfo } })}>
                 Pre-Order
               </button>
             </>
