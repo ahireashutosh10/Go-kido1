@@ -11,6 +11,8 @@ const RestaurantMenu = () => {
   const [error, setError] = useState(null);
   const [cart, setCart] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('Beliebte Gerichte');
+  const [showModal, setShowModal] = useState(false);
+  const [modalItem, setModalItem] = useState(null);
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -99,120 +101,148 @@ const RestaurantMenu = () => {
     }
   };
 
-  const getCartItemQuantity = (id) => cart.find(c => c.id === id)?.quantity || 0;
   const getTotalPrice = () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
 
-  const categories = ['Beliebte Gerichte', 'Vorspeisen', 'Suppen', 'Salate', 'Vegitarische Spezialitäten', 'Getränke'];
-  const filteredMenu = selectedCategory === 'Beliebte Gerichte'
-    ? menu
-    : menu.filter(item => item.categoryName === selectedCategory);
+  const categories = [...new Set(menu.map(item => item.categoryName))];
+  const filteredMenu = selectedCategory === 'Beliebte Gerichte' ? menu : menu.filter(item => item.categoryName === selectedCategory);
+
+  const handleShowInfo = (item) => {
+    setModalItem(item);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalItem(null);
+    setShowModal(false);
+  };
 
   if (loading) return <div className="menu-loading">Loading menu...</div>;
   if (error) return <div className="menu-error">Error: {error}</div>;
 
   return (
     <div className="restaurant-layout">
-      <div className="menu-section">
-        <div className="restaurant-header4">
-          {restaurantInfo.image ? (
-            <div className="restaurant-image-container">
-              <img src={restaurantInfo.image} alt={restaurantInfo.name} className="restaurant-image" />
-              <div className="restaurant-overlay">
-                <h1 className="restaurant-name">{restaurantInfo.name}</h1>
-                <p className="restaurant-address">{restaurantInfo.address}</p>
-                {restaurantInfo.minOrder && <div className="restaurant-min-order">Min. {restaurantInfo.minOrder} €</div>}
-              </div>
-            </div>
-          ) : (
-            <div className="restaurant-info-no-image">
+      <div className="restaurant-header4">
+        {restaurantInfo.image ? (
+          <div className="restaurant-image-container">
+            <img src={restaurantInfo.image} alt={restaurantInfo.name} className="restaurant-image" />
+            <div className="restaurant-overlay">
               <h1 className="restaurant-name">{restaurantInfo.name}</h1>
               <p className="restaurant-address">{restaurantInfo.address}</p>
               {restaurantInfo.minOrder && <div className="restaurant-min-order">Min. {restaurantInfo.minOrder} €</div>}
             </div>
-          )}
-        </div>
-
-        <div className="menu-categories">
-          {categories.map(cat => (
-            <button key={cat} className={`category-btn ${selectedCategory === cat ? 'active' : ''}`} onClick={() => setSelectedCategory(cat)}>
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        <h2 className="category-title">{selectedCategory}</h2>
-        <div className="menu-grid">
-          {filteredMenu.length === 0 ? (
-            <p className="no-items">No items found in this category.</p>
-          ) : filteredMenu.map(item => (
-           <div key={item.menu_item_id || item.id} className="menu-item-card">
-  <div className="menu-item-info">
-    <h4 className="menu-item-name">{item.name || item.menu_item_name || item.item_name}</h4>
-    <p className="menu-item-description">
-      ab {item.price || item.menu_item_price || 'N/A'}€ Erstelle nach deinem Geschmack.
-    </p>
-    <p className="menu-item-price">{item.price || item.menu_item_price || 'N/A'} €</p>
-   <div className="menu-item-actions">
-  <span className="icon-info">i</span>
-  <button className="configure-btn" onClick={() => addToCart(item)}>Konfiguriere</button>
-  <button className="icon-plus" onClick={() => addToCart(item)}>+</button>
-</div>
-  </div>
-  <img
-    src={item.image ? encodeURI(item.image) : '/default.jpg'}
-    alt={item.name || 'Menu Item'}
-    className="menu-item-image"
-  />
-</div>
-
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="restaurant-info-no-image">
+            <h1 className="restaurant-name">{restaurantInfo.name}</h1>
+            <p className="restaurant-address">{restaurantInfo.address}</p>
+            {restaurantInfo.minOrder && <div className="restaurant-min-order">Min. {restaurantInfo.minOrder} €</div>}
+          </div>
+        )}
       </div>
 
-      <div className="order-summary-section">
-        <div className="order-summary">
-          <h3 className="order-header" style={{ color: 'white' }}>Order Details</h3>
-          {cart.length === 0 ? (
-            <p className="empty-cart">Your cart is empty</p>
-          ) : (
-            <>
-              <div className="cart-items">
-                {cart.map(item => (
-                  <div key={item.id} className="cart-item">
-                    <div className="cart-item-info">
-                      <h4>{item.name}</h4>
-                      <p>{item.description}</p>
-                      <span className="cart-item-price">{item.price.toFixed(2)} €</span>
-                    </div>
-                    <div className="cart-quantity-controls">
-                      <button onClick={() => removeFromCart(item.id)} className="cart-quantity-btn">-</button>
-                      <span className="cart-quantity">{item.quantity}</span>
-                      <button onClick={() => addToCart(item)} className="cart-quantity-btn">+</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="order-total total-row">
-                <span>TOTAL</span>
-                <span>{getTotalPrice()} €</span>
-              </div>
-              <div className="delivery-option">
-                <label className="radio-option">
-                  <input type="radio" name="delivery" value="delivery" />
-                  <span>Delivery</span>
-                </label>
-                <label className="radio-option">
-                  <input type="radio" name="delivery" value="pickup" defaultChecked />
-                  <span>Pickup</span>
-                </label>
-              </div>
-              <button className="preorder-btn" onClick={() => navigate('/order-details', { state: { cart, restaurantInfo } })}>
-                Pre-Order
+      <div className="menu-cart-wrapper">
+        <div className="menu-section">
+          <div className="menu-categories">
+            {categories.map(cat => (
+              <button key={cat} className={`category-btn ${selectedCategory === cat ? 'active' : ''}`} onClick={() => setSelectedCategory(cat)}>
+                {cat}
               </button>
-            </>
-          )}
+            ))}
+          </div>
+
+          <h2 className="category-title">{selectedCategory}</h2>
+          <div className="menu-grid">
+            {filteredMenu.length === 0 ? (
+              <p className="no-items">No items found in this category.</p>
+            ) : filteredMenu.map(item => (
+              <div key={item.menu_item_id || item.id} className="menu-item-card">
+                <div className="menu-item-info">
+                  <h4 className="menu-item-name">{item.name || item.menu_item_name || item.item_name}</h4>
+                  <p className="menu-item-description">ab {item.price || item.menu_item_price || 'N/A'}€ Erstelle nach deinem Geschmack.</p>
+                  <p className="menu-item-price">{item.price || item.menu_item_price || 'N/A'} €</p>
+                  <div className="menu-item-footer">
+                    <button className="icon-info" onClick={() => handleShowInfo(item)}>i</button>
+                    <button className="configure-btn" onClick={() => addToCart(item)}>Konfiguriere</button>
+                    <button className="icon-plus" onClick={() => addToCart(item)}>+</button>
+                  </div>
+                </div>
+                <img
+                  src={item.image ? encodeURI(item.image) : '/default.jpg'}
+                  alt={item.name || 'Menu Item'}
+                  className="menu-item-image"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="order-summary-section">
+          <div className="order-summary">
+            <h3 className="order-header">Order Details</h3>
+            {cart.length === 0 ? (
+              <p className="empty-cart">Your cart is empty</p>
+            ) : (
+              <>
+                <div className="cart-items">
+                  {cart.map(item => (
+                    <div key={item.id} className="cart-item">
+                      <div className="cart-item-info">
+                        <h4>{item.name}</h4>
+                        <p>{item.description}</p>
+                        <span className="cart-item-price">{item.price.toFixed(2)} €</span>
+                      </div>
+                      <div className="cart-quantity-controls">
+                        <button onClick={() => removeFromCart(item.id)} className="cart-quantity-btn">-</button>
+                        <span className="cart-quantity">{item.quantity}</span>
+                        <button onClick={() => addToCart(item)} className="cart-quantity-btn">+</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="order-total total-row">
+                  <span>TOTAL</span>
+                  <span>{getTotalPrice()} €</span>
+                </div>
+                <div className="delivery-option">
+                  <label className="radio-option">
+                    <input type="radio" name="delivery" value="delivery" />
+                    <span>Delivery</span>
+                  </label>
+                  <label className="radio-option">
+                    <input type="radio" name="delivery" value="pickup" defaultChecked />
+                    <span>Pickup</span>
+                  </label>
+                </div>
+                <button className="preorder-btn" onClick={() => navigate('/order-details', { state: { cart, restaurantInfo } })}>
+                  Pre-Order
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {showModal && modalItem && (
+        <div class="Abc">
+  <div className="modal-overlay" onClick={handleCloseModal}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-header">
+        <h3>{modalItem.name || modalItem.menu_item_name}</h3>
+        <button className="modal-close-btn" onClick={handleCloseModal}>×</button>
+      </div>
+      
+      <img
+        src={modalItem.image ? encodeURI(modalItem.image) : '/default.jpg'}
+        alt={modalItem.name || 'Menu Image'}
+        className="modal-image"
+      />
+      <p><strong>Allergy Information:</strong> {modalItem.allergy || 'Not available'}</p>
+    </div>
+  </div>
+  </div>
+)}
+
     </div>
   );
 };

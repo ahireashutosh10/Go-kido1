@@ -24,11 +24,11 @@ import Cookie from './pages/Cookie.jsx';
 import Faq from './pages/Faq.jsx';
 import Privacy from './pages/Privacy.jsx';
 import PartnerDetailPage from './pages/PartnerDetailPage.jsx';
-import RestaurantList from './pages/RestaurantList.jsx';
+// import RestaurantList from './pages/RestaurantList.jsx';
 import RestaurantMenu from './pages/RestaurantMenu.jsx';
 import OrderDetailsForm from "./pages/OrderDetailsForm";
 import OrderConfirmation from "./pages/OrderConfirmation";
-import RestaurantDetail from './pages/RestaurantDetail.jsx';
+// import RestaurantDetail from './pages/RestaurantDetail.jsx';
 
 
 
@@ -49,7 +49,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="city" element={<City />} />
       <Route path="partner" element={<Partner />} />
-      <Route path="/restaurants" element={<RestaurantList />} />
+      {/* <Route path="/restaurants" element={<RestaurantList />} /> */}
       <Route path="restaurant/:id" element={<RestaurantMenu />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
