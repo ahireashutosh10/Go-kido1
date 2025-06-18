@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './RestaurantMenu.css';
-import { API_BASE_URL } from './config';
+import { API_BASE_URL } from '../pages/config'; 
 
 
 
@@ -21,7 +21,7 @@ const RestaurantMenu = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const response = await fetch('${API_BASE_URL}/api/api.php/restaurentdetail', {
+        const response = await fetch(`${API_BASE_URL}/api.php/restaurentdetail`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
