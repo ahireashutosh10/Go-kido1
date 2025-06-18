@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './RestaurantMenu.css';
+import { API_BASE_URL } from './config';
+
+
 
 const RestaurantMenu = () => {
   const { id } = useParams();
@@ -13,6 +16,7 @@ const RestaurantMenu = () => {
   const [selectedCategory, setSelectedCategory] = useState('Beliebte Gerichte');
   const [showModal, setShowModal] = useState(false);
   const [modalItem, setModalItem] = useState(null);
+  
 
   useEffect(() => {
     const fetchMenu = async () => {
