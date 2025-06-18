@@ -3,5 +3,5 @@
 const isProduction = import.meta.env.MODE === 'production';
 
 export const API_BASE_URL = isProduction
-  ? 'https://testapp.gokidogo.com/webapi'
-  : 'http://localhost:5173/api'; 
+  ? 'https://testapp.gokidogo.com/webapi/api.php/restaurentdetail'
+  : '/api/api.php/restaurentdetail';
