@@ -17,7 +17,7 @@ const RestaurantMenu = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const response = await fetch('/api/api.php/restaurentdetail', {
+        const response = await fetch('${API_BASE_URL}/api/api.php/restaurentdetail', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -32,18 +32,20 @@ const RestaurantMenu = () => {
         });
 
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
-
         const data = await response.json();
 
         if (data?.[0]) {
           const res = data[0].Restaurant_Detail?.[0] || {};
+          const hours = data[0].hours || [];
+
           setRestaurantInfo({
             name: res.restaurant_name || res.name || 'Restaurant Name',
             address: res.address || res.restaurant_address || 'Address not available',
             image: res.image ? encodeURI(res.image) : (res.restaurant_image || res.cover_image || ''),
             minOrder: res.min_order || res.minimum_order || null,
             deliveryTime: res.delivery_time || null,
-            rating: res.rating || null
+            rating: res.rating || null,
+            hours: hours
           });
         }
 
@@ -76,6 +78,28 @@ const RestaurantMenu = () => {
       setLoading(false);
     }
   }, [id]);
+
+  const isRestaurantOpen = () => {
+    const today = new Date();
+    const dayMap = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const currentDay = dayMap[today.getDay()];
+    const currentTime = today.getHours() * 60 + today.getMinutes();
+
+    const todayHours = restaurantInfo.hours?.find(h => h.Day === currentDay);
+    if (!todayHours) return false;
+
+    const [openH, openM] = todayHours.FirstOrder.split(':').map(Number);
+    const [closeH, closeM] = todayHours.LastOrder.split(':').map(Number);
+    const openMinutes = openH * 60 + openM;
+    const closeMinutes = closeH * 60 + closeM;
+
+    // Handle overnight case
+    if (closeMinutes < openMinutes) {
+      return currentTime >= openMinutes || currentTime < closeMinutes;
+    } else {
+      return currentTime >= openMinutes && currentTime < closeMinutes;
+    }
+  };
 
   const addToCart = (item) => {
     const existing = cart.find(c => c.id === (item.menu_item_id || item.id));
@@ -118,6 +142,11 @@ const RestaurantMenu = () => {
 
   if (loading) return <div className="menu-loading">Loading menu...</div>;
   if (error) return <div className="menu-error">Error: {error}</div>;
+
+  // ❗ Show closed message if restaurant is not open
+  if (!isRestaurantOpen()) {
+    return <div className="restaurant-closed">This restaurant is currently closed.</div>;
+  }
 
   return (
     <div className="restaurant-layout">
@@ -222,27 +251,24 @@ const RestaurantMenu = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {showModal && modalItem && (
-        <div class="Abc">
-  <div className="modal-overlay" onClick={handleCloseModal}>
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <div className="modal-header">
-        <h3>{modalItem.name || modalItem.menu_item_name}</h3>
-        <button className="modal-close-btn" onClick={handleCloseModal}>×</button>
-      </div>
-      
-      <img
-        src={modalItem.image ? encodeURI(modalItem.image) : '/default.jpg'}
-        alt={modalItem.name || 'Menu Image'}
-        className="modal-image"
-      />
-      <p><strong>Allergy Information:</strong> {modalItem.allergy || 'Not available'}</p>
-    </div>
-  </div>
-  </div>
-)}
-
+        <div className="Abc">
+          <div className="modal-overlay" onClick={handleCloseModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>{modalItem.name || modalItem.menu_item_name}</h3>
+                <button className="modal-close-btn" onClick={handleCloseModal}>×</button>
+              </div>
+              <img
+                src={modalItem.image ? encodeURI(modalItem.image) : '/default.jpg'}
+                alt={modalItem.name || 'Menu Image'}
+                className="modal-image"
+              />
+              <p><strong>Allergy Information:</strong> {modalItem.allergy || 'Not available'}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
