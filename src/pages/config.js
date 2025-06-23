@@ -1,7 +1,5 @@
 // src/pages/config.js
 
-const isProduction = import.meta.env.MODE === 'production';
-
-export const API_BASE_URL = isProduction
-  ? 'https://your-backend-host.com'
-  :  'http://localhost:5000';
+export const API_BASE_URL = import.meta.env.PROD
+  ? 'https://your-backend-host.onrender.com'  // use your Render or Railway deployed URL here
+  : 'http://localhost:5000';
