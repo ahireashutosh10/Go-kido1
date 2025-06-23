@@ -16,12 +16,15 @@ const RestaurantMenu = () => {
   const [selectedCategory, setSelectedCategory] = useState('Beliebte Gerichte');
   const [showModal, setShowModal] = useState(false);
   const [modalItem, setModalItem] = useState(null);
+
+  
   
 
   useEffect(() => {
+    
     const fetchMenu = async () => {
       try {
-        const response = await fetch(API_BASE_URL, {
+        const response = await fetch('http://localhost:5000/api/restaurant-detail', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
